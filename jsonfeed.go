@@ -1,3 +1,4 @@
+// jsonfeed is a package for parsing and constructing JSON Feeds: https://jsonfeed.org/version/1. It explicitly supports JSON Feed Version 1.
 package jsonfeed
 
 import (
