@@ -22,14 +22,14 @@ func (e MissingRequiredValueError) Error() string {
 // at position INDEX in some iterable within the field (e.g. an array of Items
 // or an array of Hubs).
 type IndexedMissingRequiredValueError struct {
-	MissingRequiredValueError
+	error
 	Index int
 }
 
 func (e IndexedMissingRequiredValueError) Error() string {
 	return fmt.Sprintf(
 		"%s at index %d",
-		e.MissingRequiredValueError.Error(),
+		e.error.Error(),
 		e.Index,
 	)
 }

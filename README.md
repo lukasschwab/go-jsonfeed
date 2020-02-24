@@ -5,5 +5,4 @@
 ## To do
 
 + Usage examples.
-+ Additional unit tests: item, hub construction.
-+ Attachments!
++ Additional unit tests: item, hub construction; attachment validation.

@@ -46,7 +46,7 @@ type Feed struct {
 	Items       []Item     `json:"items"`
 }
 
-// NewFeed constructs a minimal feed.
+// NewFeed constructs a minimal Feed.
 func NewFeed(title string, items []Item) Feed {
 	return Feed{
 		Version: Version,
@@ -63,7 +63,7 @@ type Author struct {
 	Avatar opt.String `json:"avatar,omitempty"`
 }
 
-// NewAuthor constructs a minimal author. Because there are no required fields
+// NewAuthor constructs a minimal Author. Because there are no required fields
 // for a JSON Feed author, this returns an empty Author struct.
 func NewAuthor() Author {
 	return Author{}
@@ -76,29 +76,44 @@ type Hub struct {
 	URL  string `json:"url"`
 }
 
-// NewHub constructs a minimal hub.
+// NewHub constructs a minimal Hub.
 func NewHub(t string, url string) Hub {
 	return Hub{Type: t, URL: url}
 }
 
-// An Item is an item in a JSON feed.
+// An Item is an item in a JSON Feed.
 type Item struct {
-	ID            string     `json:"id"`
-	URL           opt.String `json:"url,omitempty"`
-	ExternalURL   opt.String `json:"external_url,omitempty"`
-	Title         opt.String `json:"title,omitempty"`
-	ContentHTML   opt.String `json:"content_html,omitempty"`
-	ContentText   opt.String `json:"content_text,omitempty"`
-	Summary       opt.String `json:"summary,omitempty"`
-	Image         opt.String `json:"image,omitempty"`
-	BannerImage   opt.String `json:"banner_image,omitempty"`
-	DatePublished opt.String `json:"date_published,omitempty"`
-	DateModified  opt.String `json:"date_modified,omitempty"`
-	Author        *Author    `json:"author,omitempty"`
-	Tags          []string   `json:"tags,omitempty"`
+	ID            string       `json:"id"`
+	URL           opt.String   `json:"url,omitempty"`
+	ExternalURL   opt.String   `json:"external_url,omitempty"`
+	Title         opt.String   `json:"title,omitempty"`
+	ContentHTML   opt.String   `json:"content_html,omitempty"`
+	ContentText   opt.String   `json:"content_text,omitempty"`
+	Summary       opt.String   `json:"summary,omitempty"`
+	Image         opt.String   `json:"image,omitempty"`
+	BannerImage   opt.String   `json:"banner_image,omitempty"`
+	DatePublished opt.String   `json:"date_published,omitempty"`
+	DateModified  opt.String   `json:"date_modified,omitempty"`
+	Author        *Author      `json:"author,omitempty"`
+	Tags          []string     `json:"tags,omitempty"`
+	Attachments   []Attachment `json:"attachments,omitempty"`
 }
 
-// NewItem constructs a minimal item.
+// NewItem constructs a minimal Item.
 func NewItem(id string) Item {
 	return Item{ID: id}
+}
+
+// An Attachment is an attachment on an item in a JSON Feed.
+type Attachment struct {
+	URL               string     `json:"url"`
+	MIMEType          string     `json:"mime_type"`
+	Title             opt.String `json:"title,omitempty"`
+	SizeInBytes       opt.Int    `json:"size_in_bytes,omitempty"`
+	DurationInSeconds opt.Int    `json:"duration_in_seconds,omitempty"`
+}
+
+// NewAttachment constructs a minimal Attachment.
+func NewAttachment(url string, mimeType string) Attachment {
+	return Attachment{URL: url, MIMEType: mimeType}
 }
