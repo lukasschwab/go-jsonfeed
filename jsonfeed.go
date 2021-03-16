@@ -1,4 +1,4 @@
-// jsonfeed is a package for parsing and constructing JSON Feeds: https://jsonfeed.org/version/1. It explicitly supports JSON Feed Version 1.
+// jsonfeed is a package for parsing and constructing JSON Feeds: https://jsonfeed.org/version/1.1. It explicitly supports JSON Feed Version 1.1.
 package jsonfeed
 
 import (
@@ -41,7 +41,9 @@ type Feed struct {
 	NextURL     opt.String `json:"next_url,omitempty"`
 	Icon        opt.String `json:"icon,omitempty"`
 	Favicon     opt.String `json:"favicon,omitempty"`
-	Author      *Author    `json:"author,omitempty"`
+	Author      *Author    `json:"author,omitempty"` // Deprecated
+	Authors     []Author   `json:"authors,omitempty"`
+  Language opt.String `json:"language,omitempty"`
 	Expired     opt.Bool   `json:"expired,omitempty"`
 	Hubs        []Hub      `json:"hubs,omitempty"`
 	Items       []Item     `json:"items"`
@@ -95,8 +97,10 @@ type Item struct {
 	BannerImage   opt.String   `json:"banner_image,omitempty"`
 	DatePublished opt.String   `json:"date_published,omitempty"`
 	DateModified  opt.String   `json:"date_modified,omitempty"`
-	Author        *Author      `json:"author,omitempty"`
+	Author        *Author      `json:"author,omitempty"` // Deprecated
+	Authors       []Author     `json:"authors,omitempty"`
 	Tags          []string     `json:"tags,omitempty"`
+  Language opt.String `json:"language,omitempty"`
 	Attachments   []Attachment `json:"attachments,omitempty"`
 }
 
