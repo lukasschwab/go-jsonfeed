@@ -8,7 +8,7 @@ import (
 )
 
 // Version is the URL of the JSON Feed spec implemented here.
-const Version = "https://jsonfeed.org/version/1"
+const Version = "https://jsonfeed.org/version/1.1"
 
 // Parse constructs and validates a JSON feed from DATA.
 func Parse(data []byte) (Feed, error) {
