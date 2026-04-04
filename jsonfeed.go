@@ -2,6 +2,7 @@
 package jsonfeed
 
 import (
+	"bytes"
 	"encoding/json"
 
 	opt "github.com/lukasschwab/optional"
@@ -27,7 +28,14 @@ func (f Feed) ToJSON() ([]byte, error) {
 	if err := f.Validate(); err != nil {
 		return nil, err
 	}
-	return json.Marshal(f)
+	var buf bytes.Buffer
+	enc := json.NewEncoder(&buf)
+	enc.SetIndent("", "\t")
+	enc.SetEscapeHTML(false)
+	if err := enc.Encode(f); err != nil {
+		return nil, err
+	}
+	return buf.Bytes(), nil
 }
 
 // A Feed is a JSON Feed.
