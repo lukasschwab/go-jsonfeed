@@ -8,7 +8,7 @@ func (f Feed) Validate() error {
 		return &MissingRequiredValueError{"Feed", "version"}
 	}
 	if len(f.Title) == 0 {
-		return &MissingRequiredValueError{"Feed", "version"}
+		return &MissingRequiredValueError{"Feed", "title"}
 	}
 	// Validate inner values with requirements.
 	if f.Items == nil {
