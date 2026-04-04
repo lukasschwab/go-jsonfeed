@@ -3,8 +3,6 @@ package jsonfeed
 
 import (
 	"encoding/json"
-
-	opt "github.com/lukasschwab/optional"
 )
 
 // Version is the URL of the JSON Feed spec implemented here.
@@ -34,17 +32,17 @@ func (f Feed) ToJSON() ([]byte, error) {
 type Feed struct {
 	Version     string     `json:"version"`
 	Title       string     `json:"title"`
-	HomePageURL opt.String `json:"home_page_url,omitempty"`
-	FeedURL     opt.String `json:"feed_url,omitempty"`
-	Description opt.String `json:"description,omitempty"`
-	UserComment opt.String `json:"user_comment,omitempty"`
-	NextURL     opt.String `json:"next_url,omitempty"`
-	Icon        opt.String `json:"icon,omitempty"`
-	Favicon     opt.String `json:"favicon,omitempty"`
-	Author      *Author    `json:"author,omitempty"` // Deprecated
-	Authors     []Author   `json:"authors,omitempty"`
-  Language opt.String `json:"language,omitempty"`
-	Expired     opt.Bool   `json:"expired,omitempty"`
+	HomePageURL *string  `json:"home_page_url,omitempty"`
+	FeedURL     *string  `json:"feed_url,omitempty"`
+	Description *string  `json:"description,omitempty"`
+	UserComment *string  `json:"user_comment,omitempty"`
+	NextURL     *string  `json:"next_url,omitempty"`
+	Icon        *string  `json:"icon,omitempty"`
+	Favicon     *string  `json:"favicon,omitempty"`
+	Author      *Author  `json:"author,omitempty"` // Deprecated
+	Authors     []Author `json:"authors,omitempty"`
+	Language    *string  `json:"language,omitempty"`
+	Expired     *bool    `json:"expired,omitempty"`
 	Hubs        []Hub      `json:"hubs,omitempty"`
 	Items       []Item     `json:"items"`
 }
@@ -61,9 +59,9 @@ func NewFeed(title string, items []Item) Feed {
 // An Author is a JSON Feed structure identifying an Author. Feeds and Items
 // both have single authors.
 type Author struct {
-	Name   opt.String `json:"name,omitempty"`
-	URL    opt.String `json:"url,omitempty"`
-	Avatar opt.String `json:"avatar,omitempty"`
+	Name   *string `json:"name,omitempty"`
+	URL    *string `json:"url,omitempty"`
+	Avatar *string `json:"avatar,omitempty"`
 }
 
 // NewAuthor constructs a minimal Author. Because there are no required fields
@@ -87,20 +85,20 @@ func NewHub(t string, url string) Hub {
 // An Item is an item in a JSON Feed.
 type Item struct {
 	ID            string       `json:"id"`
-	URL           opt.String   `json:"url,omitempty"`
-	ExternalURL   opt.String   `json:"external_url,omitempty"`
-	Title         opt.String   `json:"title,omitempty"`
-	ContentHTML   opt.String   `json:"content_html,omitempty"`
-	ContentText   opt.String   `json:"content_text,omitempty"`
-	Summary       opt.String   `json:"summary,omitempty"`
-	Image         opt.String   `json:"image,omitempty"`
-	BannerImage   opt.String   `json:"banner_image,omitempty"`
-	DatePublished opt.String   `json:"date_published,omitempty"`
-	DateModified  opt.String   `json:"date_modified,omitempty"`
+	URL           *string      `json:"url,omitempty"`
+	ExternalURL   *string      `json:"external_url,omitempty"`
+	Title         *string      `json:"title,omitempty"`
+	ContentHTML   *string      `json:"content_html,omitempty"`
+	ContentText   *string      `json:"content_text,omitempty"`
+	Summary       *string      `json:"summary,omitempty"`
+	Image         *string      `json:"image,omitempty"`
+	BannerImage   *string      `json:"banner_image,omitempty"`
+	DatePublished *string      `json:"date_published,omitempty"`
+	DateModified  *string      `json:"date_modified,omitempty"`
 	Author        *Author      `json:"author,omitempty"` // Deprecated
 	Authors       []Author     `json:"authors,omitempty"`
 	Tags          []string     `json:"tags,omitempty"`
-  Language opt.String `json:"language,omitempty"`
+	Language      *string      `json:"language,omitempty"`
 	Attachments   []Attachment `json:"attachments,omitempty"`
 }
 
@@ -113,9 +111,9 @@ func NewItem(id string) Item {
 type Attachment struct {
 	URL               string     `json:"url"`
 	MIMEType          string     `json:"mime_type"`
-	Title             opt.String `json:"title,omitempty"`
-	SizeInBytes       opt.Int    `json:"size_in_bytes,omitempty"`
-	DurationInSeconds opt.Int    `json:"duration_in_seconds,omitempty"`
+	Title             *string `json:"title,omitempty"`
+	SizeInBytes       *int    `json:"size_in_bytes,omitempty"`
+	DurationInSeconds *int    `json:"duration_in_seconds,omitempty"`
 }
 
 // NewAttachment constructs a minimal Attachment.
