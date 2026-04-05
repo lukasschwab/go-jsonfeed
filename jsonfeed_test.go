@@ -3,6 +3,7 @@ package jsonfeed
 import (
 	"encoding/json"
 	"reflect"
+	"strings"
 	"testing"
 )
 
@@ -129,5 +130,38 @@ func TestUnchangedToJSON(t *testing.T) {
 	atlas1, _ := Parse(j)
 	if !reflect.DeepEqual(atlas0, atlas1) {
 		t.Error("Original feed doesn't match parsed feed.")
+	}
+}
+
+func TestToJSONUnescapedHTML(t *testing.T) {
+	htmlContent := `<p>Hello, <em>world</em>!</p>`
+	item := NewItem("1")
+	item.ContentHTML = htmlContent
+
+	f := NewFeed("HTML Test", []Item{item})
+	j, err := f.ToJSON()
+	if err != nil {
+		t.Fatal("Failed to marshal feed to JSON.", err)
+	}
+
+	output := string(j)
+
+	// content_html should contain unescaped HTML, not Unicode escapes.
+	if strings.Contains(output, `\u003c`) || strings.Contains(output, `\u003e`) {
+		t.Error("ToJSON escaped HTML entities in content_html; expected unescaped HTML.")
+	}
+	if !strings.Contains(output, `<p>Hello, <em>world</em>!</p>`) {
+		t.Error("ToJSON output does not contain the expected unescaped HTML.")
+	}
+
+	// Output should be indented with tabs.
+	if !strings.Contains(output, "\t") {
+		t.Error("ToJSON output is not indented.")
+	}
+
+	// Verify the output is still valid JSON that round-trips.
+	_, err = Parse(j)
+	if err != nil {
+		t.Error("Error parsing ToJSON output.", err)
 	}
 }
