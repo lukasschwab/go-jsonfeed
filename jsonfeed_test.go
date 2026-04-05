@@ -30,6 +30,21 @@ func assertInvalidFeed(t *testing.T, feed string, missing string) {
 	}
 }
 
+func TestFeedValidationEmptyTitleErrorMessage(t *testing.T) {
+	feed, err := parseFromString(FeedWithoutTitle)
+	_ = feed
+	if err == nil {
+		t.Fatal("Expected error for feed without title, got nil")
+	}
+	mrve, ok := err.(*MissingRequiredValueError)
+	if !ok {
+		t.Fatalf("Expected *MissingRequiredValueError, got %T", err)
+	}
+	if mrve.Key != "title" {
+		t.Errorf("Expected error key 'title', got '%s'", mrve.Key)
+	}
+}
+
 func TestFeedValidation(t *testing.T) {
 	assertInvalidFeed(t, FeedWithoutVersion, "version")
 	assertInvalidFeed(t, FeedWithoutTitle, "title")
